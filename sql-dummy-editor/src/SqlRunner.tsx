@@ -2,6 +2,7 @@ import Split from "react-split";
 import QueryContainer from "./Components/QueryContainer";
 import Results from "./Components/Results";
 
+
 export default function SqlRunner() {
     return (
         <Split
@@ -10,6 +11,7 @@ export default function SqlRunner() {
             gutterSize={10} // Space between panes
             direction="horizontal" // Side-by-side layout
             className="split-container"
+            draggable="true"
         >
             <section className="query-section"><QueryContainer /></section>
             <section className="result-section"><Results /></section>

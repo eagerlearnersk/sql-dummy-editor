@@ -2,11 +2,7 @@ import { useQueryContext } from '../Context/QueryContext'
 
 const Results = () => {
   const { queries, results, showResults } = useQueryContext();
-
-  if (!showResults) {
-    return null;
-  }
-
+  console.log(results, "res")
   return (
     <section>
       <h3>Query Results:</h3>

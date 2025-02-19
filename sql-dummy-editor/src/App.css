@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 #root {
   max-width: 1280px;
   height: 1280px;
@@ -57,7 +59,7 @@
 } */
 
 
-.sql-runner-container {
+ .sql-runner-container {
   padding: 20px;
   border: 1px solid #ccc;
 }
@@ -72,12 +74,12 @@
   padding: 2px;
   border: 1px solid #ccc;
 }
-
+/* 
 .query-section header {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid gray;
-}
+} */
 
 
 .query-action-items {
@@ -89,10 +91,7 @@
  padding: 5px;
 }
 
-form button {
-  margin-top: 10px;
-  width:200px;
-}
+
 
 .query-text {
   margin-top:10px;
@@ -105,4 +104,4 @@ form button {
 
 .query {
   margin-top:5px;
-}
+} 

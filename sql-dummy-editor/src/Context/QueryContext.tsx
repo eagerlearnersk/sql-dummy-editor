@@ -1,14 +1,20 @@
-import { createContext, useState, useContext, ReactNode } from 'react';
+import { createContext, useState, useContext, ReactNode, act, useReducer } from 'react';
 // import suppliers from '../Data/suppliers.json'
 import shippers from '../Data/shippers.json'
 import regions from '../Data/regions.json'
 
-interface QueryContextType {
+
+interface QueryResult  {
   queries: string[];
   results: Record<string, any>;
-  showResults: boolean;
-  showOutputScreen: (showRests: boolean) => void;
-  addQuery: (query: string, result: any) => void;
+}
+
+
+interface QueryContextType extends QueryResult {
+  queries: string[];
+  results: Record<string, any>;
+  // addQuery: (query: string, result: any) => void;
+  dispatch: any
 }
 
 const QueryContext = createContext<QueryContextType | undefined>(undefined);
@@ -18,29 +24,54 @@ const mockQueries = [
   // 'SELECT * FROM SUPPLIERS'
 ]
 
+const testResults = [...regions, ...shippers]
+
 const mockResults = {
   'SELECT * FROM REGIONS': [...regions],
-  'SELECT * FROM SHIPPERS': [...shippers],
-  //   'SELECT * FROM SUPPLIERS': [...suppliers]
+  'SELECT * FROM SHIPPERS': [...shippers]
+}
+
+
+function getResults (queries: string[]) {
+  const res: any ={}
+  for(let query of queries) {
+    res[query] = testResults[Math.floor(Math.random() * testResults.length)]
+  }
+  return res
+}
+function QueryReducer(state: any, actions: any) {
+
+  switch (actions.type) {
+    case "ADD_QUERY":
+      return {
+        ...state,
+        queries: [...state.queries, actions.query]
+      }
+    case "REMOVE_QUERY":
+      return { ...state, queries: state.queries.filter((_: string, i: number) => i !== actions.index) };
+    case "RUN_SQL":
+      return { 
+        ...state, 
+        results: getResults(state.queries),
+      };
+    default:
+      return state;
+  }
 }
 
 
 export const QueryProvider = ({ children }: { children: ReactNode }) => {
-  const [queries, setQueries] = useState<string[]>(mockQueries);
-  const [results, setResults] = useState<Record<string, any>>(mockResults);
-  const [showResults, setShowResults] = useState<boolean>(true)
+  // const [queries, setQueries] = useState<string[]>(mockQueries);
+  // const [results, setResults] = useState<Record<string, any>>(mockResults);
+  // const [showResults, setShowResults] = useState<boolean>(true)
 
-  const addQuery = (query: string, result: any) => {
-    setQueries(prev => [...prev, query]);
-    setResults(prev => ({ ...prev, [query]: result }));
-  };
+  const [state, dispatch] = useReducer(QueryReducer, { queries: mockQueries, results: mockResults })
 
-  const showOutputScreen = (showRests: boolean) => {
-    setShowResults(showRests)
-  }
+
+
 
   return (
-    <QueryContext.Provider value={{ queries, results, showResults, showOutputScreen, addQuery }}>
+    <QueryContext.Provider value={{ queries: state.queries, results: state.results, dispatch }}>
       {children}
     </QueryContext.Provider>
   );
