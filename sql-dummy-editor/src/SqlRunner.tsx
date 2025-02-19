@@ -1,5 +1,5 @@
 import Split from "react-split";
-import QueryForm from "./Components/QueryForm";
+import QueryContainer from "./Components/QueryContainer";
 import Results from "./Components/Results";
 
 export default function SqlRunner() {
@@ -11,7 +11,7 @@ export default function SqlRunner() {
             direction="horizontal" // Side-by-side layout
             className="split-container"
         >
-            <section className="query-section"><QueryForm /></section>
+            <section className="query-section"><QueryContainer /></section>
             <section className="result-section"><Results /></section>
         </Split>
     )

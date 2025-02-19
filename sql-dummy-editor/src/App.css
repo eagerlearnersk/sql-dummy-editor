@@ -84,7 +84,18 @@
   padding: 20px;
 }
 .query-section form {
+  display:grid;
+  grid-template-columns: 0.8fr;
  padding: 5px;
+}
+
+form button {
+  margin-top: 10px;
+  width:200px;
+}
+
+.query-text {
+  margin-top:10px;
 }
 
 .query-form {

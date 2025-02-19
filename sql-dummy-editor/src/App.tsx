@@ -1,14 +1,16 @@
 
 import './App.css'
-import Results from './Components/Results'
+import { QueryProvider } from './Context/QueryContext'
 import SqlRunner from './SqlRunner'
 
 function App() {
 
   return (
+    <QueryProvider>
       <section className='sql-runner-container'>
-        <SqlRunner></SqlRunner> <Results></Results>
+        <SqlRunner/>
       </section>
+    </QueryProvider>
   )
 }
 
