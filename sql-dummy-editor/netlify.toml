@@ -1,0 +1,51 @@
+[build]
+  publish = "dist"  # Or "build", "public", etc., depending on your Vite config
+  command = "npm run build"  # Or "yarn build", "pnpm build", etc.
+
+[[headers]]
+  for = "/*"  # Catch-all for all files
+  [[headers.values]]
+    Content-Type = "text/html; charset=utf-8"  # Important for HTML files
+
+[[headers]]
+  for = "/*.js"  # For JavaScript files
+  [[headers.values]]
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/*.jsx"  # If you're using JSX files directly
+  [[headers.values]]
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/*.ts"  # For TypeScript files (though usually transpiled to JS)
+  [[headers.values]]
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/*.tsx"  # For TypeScript React files
+  [[headers.values]]
+    Content-Type = "application/javascript"
+
+[[headers]]
+  for = "/*.svg"  # For SVG images
+  [[headers.values]]
+    Content-Type = "image/svg+xml"
+
+[[headers]]
+  for = "/*.json" # For JSON files (often used for configuration)
+  [[headers.values]]
+    Content-Type = "application/json"
+
+[[headers]]
+  for = "/*.webmanifest" # For Web App Manifest files
+  [[headers.values]]
+    Content-Type = "application/manifest+json"
+
+# Add more headers as needed for other file types (e.g., CSS, images, fonts)
+
+# Example for CSS files:
+[[headers]]
+  for = "/*.css"
+  [[headers.values]]
+    Content-Type = "text/css"
