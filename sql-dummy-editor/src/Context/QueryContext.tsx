@@ -4,7 +4,7 @@ import shippers from '../Data/shippers.json'
 import regions from '../Data/regions.json'
 
 
-interface QueryResult  {
+interface QueryResult {
   queries: string[];
   results: Record<string, any>;
 }
@@ -24,7 +24,7 @@ const mockQueries = [
   // 'SELECT * FROM SUPPLIERS'
 ]
 
-const testResults = [...regions, ...shippers]
+const testResults = [[...regions], [...shippers]]
 
 const mockResults = {
   'SELECT * FROM REGIONS': [...regions],
@@ -32,10 +32,11 @@ const mockResults = {
 }
 
 
-function getResults (queries: string[]) {
-  const res: any ={}
-  for(let query of queries) {
-    res[query] = testResults[Math.floor(Math.random() * testResults.length)]
+function getResults(queries: string[]) {
+  const res: any = {}
+  for (let query of queries) {
+    let resArr = testResults[Math.floor(Math.random() * testResults.length)]
+    res[query] = resArr
   }
   return res
 }
@@ -48,10 +49,10 @@ function QueryReducer(state: any, actions: any) {
         queries: [...state.queries, actions.query]
       }
     case "REMOVE_QUERY":
-      return { ...state, queries: state.queries.filter((_: string, i: number) => i !== actions.index) };
+      return { ...state, queries: state.queries.filter((_: string, i: number) => i !== actions.index)};
     case "RUN_SQL":
-      return { 
-        ...state, 
+      return {
+        ...state,
         results: getResults(state.queries),
       };
     default:

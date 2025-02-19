@@ -1,7 +1,7 @@
 import { useQueryContext } from '../Context/QueryContext'
 
 const Results = () => {
-  const { queries, results, showResults } = useQueryContext();
+  const { queries, results } = useQueryContext();
   console.log(results, "res")
   return (
     <section>
@@ -9,18 +9,18 @@ const Results = () => {
       <div className='result-body'>
         {queries.map((query, index) => (
           <div key={index} style={{ marginBottom: '20px' }}>
-            <h4>{query}</h4>
+            {results[query] ?<h4>{query}</h4>:null}
             {results[query] ? (
               <table border={1} style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr>
-                    {Object.keys(results[query][0]).map((key) => (
+                    {results[query] && results[query][0] && Object.keys(results[query][0]).map((key) => (
                       <th key={key} style={{ padding: "8px", background: "#f2f2f2" }}>{key}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {results[query].map((row: any, rowIndex: number) => (
+                  {results[query] && results[query][0] && results[query].map((row: any, rowIndex: number) => (
                     <tr key={rowIndex}>
                       {Object.values(row).map((value: any, cellIndex: number) => (
                         <td key={cellIndex} style={{ padding: "8px" }}>{value}</td>
@@ -29,9 +29,7 @@ const Results = () => {
                   ))}
                 </tbody>
               </table>
-            ) : (
-              <p>No data available.</p>
-            )}
+            ) : null}
           </div>
         ))}
       </div>
