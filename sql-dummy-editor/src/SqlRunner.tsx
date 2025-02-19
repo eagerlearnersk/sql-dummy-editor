@@ -14,7 +14,9 @@ export default function SqlRunner() {
             draggable="true"
         >
             <section className="query-section"><QueryContainer /></section>
+
             <section className="result-section"><Results /></section>
+
         </Split>
     )
 }

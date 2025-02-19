@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, ReactNode, act, useReducer } from 'react';
-// import suppliers from '../Data/suppliers.json'
+import suppliers from '../Data/suppliers.json'
 import shippers from '../Data/shippers.json'
 import regions from '../Data/regions.json'
 
@@ -21,14 +21,15 @@ const QueryContext = createContext<QueryContextType | undefined>(undefined);
 const mockQueries = [
   'SELECT * FROM REGIONS',
   'SELECT * FROM SHIPPERS',
-  // 'SELECT * FROM SUPPLIERS'
+  'SELECT * FROM SUPPLIERS'
 ]
 
-const testResults = [[...regions], [...shippers]]
+const testResults = [[...regions], [...shippers], [...suppliers]]
 
 const mockResults = {
   'SELECT * FROM REGIONS': [...regions],
-  'SELECT * FROM SHIPPERS': [...shippers]
+  'SELECT * FROM SHIPPERS': [...shippers],
+  'SELECT * FROM SUPPLIERS': [...suppliers]
 }
 
 
@@ -49,12 +50,17 @@ function QueryReducer(state: any, actions: any) {
         queries: [...state.queries, actions.query]
       }
     case "REMOVE_QUERY":
-      return { ...state, queries: state.queries.filter((_: string, i: number) => i !== actions.index)};
+      return { ...state, queries: state.queries.filter((_: string, i: number) => i !== actions.index) };
     case "RUN_SQL":
       return {
         ...state,
         results: getResults(state.queries),
       };
+    case 'RESET_QUERY':
+      return {
+        ...state,
+        queries: []
+      }
     default:
       return state;
   }
