@@ -15,9 +15,23 @@ const QueryContainer = () => {
   });
 
   const handleSaveQuery = useCallback((ev: React.MouseEvent) => {
+
     ev.preventDefault();
-    dispatch({ type: 'ADD_QUERY', payload: queryText })
-    // addQuery(queryText, mockResult)
+    if (queryText !== "") {
+      dispatch({ type: 'ADD_QUERY', payload: queryText })
+      // addQuery(queryText, mockResult)
+      setQueryText("");
+      setShowQueryInput(prev => !prev)
+    } else {
+      // Can add more validations -
+      // TODO: check for valid sql query
+      alert("enter valid input");
+    }
+    // showOutputScreen(false)
+  }, [queryText, dispatch])
+
+  const handleDismiss = useCallback((ev: React.MouseEvent) => {
+    ev.preventDefault();
     setQueryText("");
     setShowQueryInput(prev => !prev)
     // showOutputScreen(false)
@@ -35,7 +49,7 @@ const QueryContainer = () => {
   }, [dispatch]);
 
   const handleRunQuery = useCallback(() => {
-    runQueryWithDelay(dispatch, queries,1000)
+    runQueryWithDelay(dispatch, queries, 1000)
 
   }, [dispatch, queries]);
 
@@ -56,7 +70,7 @@ const QueryContainer = () => {
         </button>
         <button
           title="Reset"
-          className="px-2 py-2 bg-gray-100 text-black rounded-md m-2 reset-btn"
+          className="px-2 py-2 bg-gray-200 text-black rounded-md m-2 reset-btn"
           onClick={handleResetQuery}
         >
           Reset
@@ -90,7 +104,7 @@ const QueryContainer = () => {
       </section>
       <form className='p-5'>
         {showQueryInput && (
-          <div className="flex gap-2 mt-2 p-5">
+          <div className="flex mt-2 p-5">
             <input
               type="text"
               value={queryText}
@@ -99,9 +113,14 @@ const QueryContainer = () => {
               className="border p-2 flex-grow rounded-md"
             />
             <button
-              className="px-4 py-2 bg-blue-500 text-white rounded-md text text-center"
+              className="px-4 py-2 bg-blue-500 text-white rounded-md m-2"
               onClick={handleSaveQuery}>
               Save
+            </button>
+            <button
+              className="px-4 py-2 bg-gray-200 text-black rounded-md m-2 reset-btn"
+              onClick={handleDismiss}>
+              Dismiss
             </button>
           </div>
         )}
