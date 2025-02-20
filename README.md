@@ -36,18 +36,21 @@
 - **Largest Contentful Paint (LCP)**: 0.3 seconds
 
 ## ** How Performance is measured **
-- **LightHouse Performance Analysis**
-- Generated Lighthouse reports for both deployed and local environments.
-- Evaluated how resources were being utilized and identified opportunities for optimization.
-- **Optimizations Implemented**:
-- Minified CSS and JavaScript.
-- Lazy-loaded resources to reduce initial page load time.
-- Removed unused CSS and JS.
-- **React Profiler**
-- Identified unnecessary rerenders
-- **Optimizations Implemented**:
-- useCallback and useMemo to memoize functions and values.
-- memo to prevent child components from re-rendering unnecessaril
-- **Lazy loaded the component using React.Suspense**
+- **Lighthouse Performance Analysis**  
+  - Generated Lighthouse reports for both deployed and local environments.  
+  - Evaluated how resources were being utilized and identified opportunities for optimization.  
+  - **Optimizations Implemented:**  
+    - Minified CSS and JavaScript.  
+    - Lazy-loaded resources to reduce initial page load time.  
+    - Removed unused CSS and JS.  
+
+- **React Profiler**  
+  - Identified unnecessary re-renders.  
+  - **Optimizations Implemented:**  
+    - Used `useCallback` and `useMemo` to memoize functions and values.  
+    - Used `memo` to prevent child components from re-rendering unnecessarily.  
+
+- **Lazy Loading with React.Suspense**  
+  - Lazy-loaded components using `React.Suspense` to improve performance and reduce the initial load time.  
 
 Deployed at: https://67b75b9fc1f0a60f460cd093--papaya-baklava-596918.netlify.app/
