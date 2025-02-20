@@ -1,58 +1,88 @@
-import { useState } from 'react';
+import { useState, memo, useCallback, useMemo } from 'react';
 import { useQueryContext } from '../Context/QueryContext'
 import { Trash, Run } from '../Icons';
-
-
 
 const QueryContainer = () => {
   const [queryText, setQueryText] = useState("");
   const [showQueryInpt, setShowQueryIp] = useState(false);
   const { queries, dispatch } = useQueryContext();
-
-  const TrashButton = ({ removeHandler }: { removeHandler: any }) => {
+  const TrashButton = memo(({ removeHandler }: { removeHandler: React.MouseEventHandler<HTMLButtonElement> }) => {
     return (
-      <button className="p-2" onClick={() => {
-        removeHandler()
-      }}>
+      <button className="p-2" onClick={removeHandler}>
         <Trash />
       </button>
-    )
-  }
+    );
+  });
 
-  const handleRunQuery = () => {
-    dispatch({ type: 'RUN_SQL' })
-  };
+  const handleSaveQuery = useCallback((ev: React.MouseEvent) => {
+    ev.preventDefault();
+    dispatch({ type: 'ADD_QUERY', payload: queryText })
+    // addQuery(queryText, mockResult)
+    setQueryText("");
+    // showOutputScreen(false)
+  }, [queryText, dispatch])
+
+  const toggleQueryInput = useCallback((ev: React.MouseEvent) => {
+    ev.preventDefault();
+    setShowQueryIp(prev => !prev);
+  }, []);
+
+  const handleRemoveQuery = useCallback((index: number) => {
+    dispatch({ type: "REMOVE_QUERY", payload: index });
+  }, [dispatch]);
+
+  const handleRunQuery = useCallback(() => {
+    dispatch({ type: "RUN_SQL" });
+  }, [dispatch]);
+
+  const handleResetQuery = useCallback(() => {
+    dispatch({ type: "RESET_QUERY" });
+  }, [dispatch]);
+
+
+  const HeaderButtons = memo(() => {
+    return (
+      <section className="btn-header-section">
+        <button
+          className="px-2 py-2 bg-green-500 text-white rounded-md"
+          onClick={handleRunQuery}
+          title="Run"
+        >
+          <Run />
+        </button>
+        <button
+          title="Reset"
+          className="px-2 py-2 bg-gray-100 text-black rounded-md m-2 reset-btn"
+          onClick={handleResetQuery}
+        >
+          Reset
+        </button>
+      </section>
+    );
+  });
+
+  const queryList = useMemo(() =>
+    queries.map((query, index) => (
+      <div key={`${query}-${index}`}>
+        <textarea
+          value={query}
+          readOnly
+          className="w-md border p-2 rounded-md bg-gray-100"
+        />
+        <TrashButton
+          removeHandler={() => handleRemoveQuery(index)}
+        />
+      </div>
+    )), [queries, handleRemoveQuery])
 
   return (
     <section>
       <header className="flex justify-between mb-5 border-bottom pt-4 px-4">
         <h3 className="text-xl font-bold">Input</h3>
-        <section className='btn-header-section'>
-          <button className="px-2 py-2 bg-green-500 text-white rounded-md" onClick={handleRunQuery} title='Run'><Run /></button>
-          <button
-          title='Reset'
-            className="px-2 py-2 bg-gray-100 text-black rounded-md m-2 reset-btn"
-            onClick={() => {
-              dispatch({ type: 'RESET_QUERY' })
-            }}>Reset</button>
-        </section>
-
+        <HeaderButtons />
       </header>
-
       <section className="space-y-2 p-5">
-        {queries.map((query, index) => (
-          <div key={`${query}-${index}`}>
-            <textarea
-              key={index}
-              value={query}
-              readOnly
-              className="w-md border p-2 rounded-md bg-gray-100"
-            />
-            <TrashButton removeHandler={() => {
-              dispatch({ type: 'REMOVE_QUERY', payload:index })
-            }} />
-          </div>
-        ))}
+        {queryList}
       </section>
       <form className='p-5'>
         {showQueryInpt && (
@@ -66,29 +96,20 @@ const QueryContainer = () => {
             />
             <button
               className="px-4 py-2 bg-blue-500 text-white rounded-md text text-center"
-              onClick={ev => {
-                ev.preventDefault();
-                dispatch({ type: 'ADD_QUERY', payload: queryText })
-                // addQuery(queryText, mockResult)
-                setQueryText("");
-                // showOutputScreen(false)
-              }}>Save</button>
-
-
-
+              onClick={handleSaveQuery}>
+              Save
+            </button>
           </div>
         )}
+
         <button
           title='Create More'
           className="m-auto px-4 py-2 bg-gray-300 rounded-md add-query"
-          onClick={(ev) => {
-            ev.preventDefault()
-            setShowQueryIp(showIp => !showIp)
-          }}> Create More</button>
+          onClick={toggleQueryInput}>
+          Create More
+        </button>
       </form>
-
     </section>
   );
 };
-
-export default QueryContainer;
+export default memo(QueryContainer);
