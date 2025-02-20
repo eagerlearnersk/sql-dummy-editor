@@ -10,6 +10,7 @@ export default function SqlRunner() {
 
     return (
         <Suspense fallback={<p>Loading SqlRunner...</p>}>
+           
             <Split
                 sizes={[50, 50]}
                 minSize={200}

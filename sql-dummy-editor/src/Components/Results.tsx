@@ -33,14 +33,16 @@ const Results = ({ results, loading }: { results: { [key: string]: any }, loadin
             const headers = result.length > 0 ? Object.keys(result[0]) : [];
 
             return (
+           
                 <div key={`${query}-${index}`} className="m-5">
-                    <h4>{query}</h4>
+                   
+                    <h4 className='font-bold'>{query}</h4>
                     <div className="table-container">
                         <table className="results-table">
                             <thead>
                                 <tr>
                                     {headers.map((key) => (
-                                        <th key={key} className='bold'>{key}</th>
+                                        <th key={key}>{key}</th>
                                     ))}
                                 </tr>
                             </thead>

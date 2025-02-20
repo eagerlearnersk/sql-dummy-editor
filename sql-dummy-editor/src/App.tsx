@@ -5,11 +5,17 @@ import SqlRunner from './SqlRunner'
 
 function App() {
   return (
-    <QueryProvider>
-      <section className='sql-runner-container'>
-        <SqlRunner/>
-      </section>
-    </QueryProvider>
+    <>
+      <header className='text-center'>
+        <h1 style={{ fontWeight: 'bold', fontSize: 'x-large'}}> Web Based Sql Runner</h1>
+      </header>
+      <QueryProvider>
+
+        <section className='sql-runner-container'>
+          <SqlRunner />
+        </section>
+      </QueryProvider>
+    </>
   )
 }
 
