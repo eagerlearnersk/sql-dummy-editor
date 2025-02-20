@@ -1,15 +1,16 @@
 import { createContext, useContext, ReactNode, useReducer, Dispatch } from 'react';
-import suppliers from '../Data/suppliers.json'
-import shippers from '../Data/shippers.json'
-import regions from '../Data/regions.json'
-import categories from '../Data/categories.json'
-import customers from '../Data/customers.json'
-import territories from '../Data/territories.json'
+import suppliers from '../mockData/suppliers.json'
+import shippers from '../mockData/shippers.json'
+import regions from '../mockData/regions.json'
+import categories from '../mockData/categories.json'
+import customers from '../mockData/customers.json'
+import territories from '../mockData/territories.json'
 
 
 interface SqlRunnerState {
   queries: string[]
-  results: ResultDataMap 
+  results: ResultDataMap
+  loading: boolean
 }
 
 
@@ -30,18 +31,20 @@ interface QueryResult {
 
 interface QueryContextType extends QueryResult {
   queries: string[];
-  results: ResultDataMap 
+  results: ResultDataMap
   dispatch: Dispatch<Action>
+  loading: boolean
+  runQueryWithDelay: (dispatch: Dispatch<Action>, queries: string[], delay: number) => void
 }
 
 const QueryContext = createContext<QueryContextType | undefined>(undefined);
 const mockQueries = [
   'SELECT * FROM REGIONS',
   'SELECT * FROM SHIPPERS',
-  'SELECT * FROM SUPPLIERS'
+  'SELECT * FROM SUPPLIERS',
 ]
 
-const testResults = [[...regions], [...shippers], [...suppliers], [...categories], [...customers],[...territories]]
+const testResults = [[...regions], [...shippers], [...suppliers], [...categories], [...customers], [...territories]]
 
 const mockResults = {
   'SELECT * FROM REGIONS': [...regions],
@@ -54,7 +57,7 @@ const mockResults = {
 
 
 function getResults(queries: string[]) {
-  const res: ResultDataMap={}
+  const res: ResultDataMap = {}
   for (let query of queries) {
     let resArr = testResults[Math.floor(Math.random() * testResults.length)]
     res[query] = resArr
@@ -74,7 +77,14 @@ function QueryReducer(state: SqlRunnerState, actions: Action) {
     case "RUN_SQL":
       return {
         ...state,
+        loading: true,
+        //results: getResults(state.queries),
+      };
+    case "SET_RESULTS":
+      return {
+        ...state,
         results: getResults(state.queries),
+        loading: false, // Stop loading after results are set
       };
     case 'RESET_QUERY':
       return {
@@ -87,12 +97,21 @@ function QueryReducer(state: SqlRunnerState, actions: Action) {
 }
 
 
+
 export const QueryProvider = ({ children }: { children: ReactNode }) => {
 
-  const [state, dispatch]:[SqlRunnerState,  Dispatch<Action>] = useReducer(QueryReducer, { queries: mockQueries, results: mockResults })
+  const [state, dispatch]: [SqlRunnerState, Dispatch<Action>] = useReducer(QueryReducer, { queries: mockQueries, results: mockResults, loading: false })
 
+  function runQueryWithDelay(dispatch: Dispatch<Action>, queries: string[], delay: number = 2000) {
+    console.log(delay)
+    dispatch({ type: "RUN_SQL" });
+    setTimeout(() => {
+      const results = getResults(queries);
+      dispatch({ type: "SET_RESULTS", payload: results });
+    }, delay);
+  }
   return (
-    <QueryContext.Provider value={{ queries: state.queries, results: state.results, dispatch }}>
+    <QueryContext.Provider value={{ queries: state.queries, results: state.results, dispatch, loading: state.loading, runQueryWithDelay }}>
       {children}
     </QueryContext.Provider>
   );

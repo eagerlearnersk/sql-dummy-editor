@@ -1,7 +1,7 @@
 import { memo, useCallback, useMemo } from 'react';
-import { CopyIcon, Download, Share } from '../Icons';
+import { CopyIcon, Download } from '../Icons';
 
-const Results = ({ results }: { results: { [key: string]: any } }) => {
+const Results = ({ results, loading }: { results: { [key: string]: any }, loading: boolean }) => {
 
     const handleDownload = useCallback(() => {
         const jsonString = JSON.stringify(results, null, 2); // Pretty print JSON
@@ -33,7 +33,7 @@ const Results = ({ results }: { results: { [key: string]: any } }) => {
             const headers = result.length > 0 ? Object.keys(result[0]) : [];
 
             return (
-                <div key={`${query}-${index}`} className="m-20">
+                <div key={`${query}-${index}`} className="m-5">
                     <h4>{query}</h4>
                     <div className="table-container">
                         <table className="results-table">
@@ -45,8 +45,8 @@ const Results = ({ results }: { results: { [key: string]: any } }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {result.map((row) => (
-                                    <tr key={`${query}-${row}`}>
+                                {result.map((row, rIdx) => (
+                                    <tr key={`${query}-${index}-${rIdx}`}>
                                         {headers.map((header) => (
                                             <td key={`${header}`}>{row[header]}</td>
                                         ))}
@@ -72,12 +72,10 @@ const Results = ({ results }: { results: { [key: string]: any } }) => {
                     <button className="px-2" onClick={handleDownload}>
                         <Download />
                     </button>
-                    <button className="px-2">
-                        <Share />
-                    </button>
+
                 </section>
             </header>
-            <section className="result-body">{renderResults}</section>
+            {loading ? <div>Executing your query/queryies....</div> : <section className="result-body">{renderResults}</section>}
         </section>
     );
 };

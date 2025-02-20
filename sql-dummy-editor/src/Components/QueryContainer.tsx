@@ -5,7 +5,7 @@ import { Trash, Run } from '../Icons';
 const QueryContainer = () => {
   const [queryText, setQueryText] = useState("");
   const [showQueryInpt, setShowQueryIp] = useState(false);
-  const { queries, dispatch } = useQueryContext();
+  const { queries, dispatch, runQueryWithDelay } = useQueryContext();
   const TrashButton = memo(({ removeHandler }: { removeHandler: React.MouseEventHandler<HTMLButtonElement> }) => {
     return (
       <button className="p-2" onClick={removeHandler}>
@@ -27,13 +27,16 @@ const QueryContainer = () => {
     setShowQueryIp(prev => !prev);
   }, []);
 
+
+
   const handleRemoveQuery = useCallback((index: number) => {
     dispatch({ type: "REMOVE_QUERY", payload: index });
   }, [dispatch]);
 
   const handleRunQuery = useCallback(() => {
-    dispatch({ type: "RUN_SQL" });
-  }, [dispatch]);
+    runQueryWithDelay(dispatch, queries,5000)
+
+  }, [dispatch, queries]);
 
   const handleResetQuery = useCallback(() => {
     dispatch({ type: "RESET_QUERY" });
