@@ -58,9 +58,17 @@
   height: 100vh;
 }
 
+.btn-header-section {
+  position: relative;
+  bottom: 15px;
+}
+
+.reset-btn {
+  vertical-align: super;
+}
 .query-section,
 .result-section {
-  padding: 2px;
+  
   border: 1px solid #ccc;
 }
 
@@ -160,3 +168,7 @@ Tried styles with React-window
   overflow-x: auto;
   width: 100%;
 }*/
+
+button {
+  cursor: pointer;
+}
