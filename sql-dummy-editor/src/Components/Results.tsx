@@ -77,7 +77,7 @@ const Results = ({ results, loading }: { results: { [key: string]: any }, loadin
 
                 </section>
             </header>
-            {loading ? <div>Executing your query/queryies....</div> : <section className="result-body">{renderResults}</section>}
+            {loading ? <div>Generating Results for your SQL query....</div> : <section className="result-body">{renderResults}</section>}
         </section>
     );
 };

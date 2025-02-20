@@ -4,7 +4,7 @@ import { Trash, Run } from '../Icons';
 
 const QueryContainer = () => {
   const [queryText, setQueryText] = useState("");
-  const [showQueryInpt, setShowQueryIp] = useState(false);
+  const [showQueryInput, setShowQueryInput] = useState(false);
   const { queries, dispatch, runQueryWithDelay } = useQueryContext();
   const TrashButton = memo(({ removeHandler }: { removeHandler: React.MouseEventHandler<HTMLButtonElement> }) => {
     return (
@@ -19,12 +19,13 @@ const QueryContainer = () => {
     dispatch({ type: 'ADD_QUERY', payload: queryText })
     // addQuery(queryText, mockResult)
     setQueryText("");
+    setShowQueryInput(prev => !prev)
     // showOutputScreen(false)
   }, [queryText, dispatch])
 
   const toggleQueryInput = useCallback((ev: React.MouseEvent) => {
     ev.preventDefault();
-    setShowQueryIp(prev => !prev);
+    setShowQueryInput(prev => !prev);
   }, []);
 
 
@@ -34,7 +35,7 @@ const QueryContainer = () => {
   }, [dispatch]);
 
   const handleRunQuery = useCallback(() => {
-    runQueryWithDelay(dispatch, queries,5000)
+    runQueryWithDelay(dispatch, queries,1000)
 
   }, [dispatch, queries]);
 
@@ -88,7 +89,7 @@ const QueryContainer = () => {
         {queryList}
       </section>
       <form className='p-5'>
-        {showQueryInpt && (
+        {showQueryInput && (
           <div className="flex gap-2 mt-2 p-5">
             <input
               type="text"

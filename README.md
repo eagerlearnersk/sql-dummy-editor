@@ -54,4 +54,4 @@
 
 Check out the live demo of the project here:  https://67b75b9fc1f0a60f460cd093--papaya-baklava-596918.netlify.app/
 
-Features demo: https://www.loom.com/share/337e34d89acf47f2bb4b471f8bffdbc1
+Features demo: https://www.loom.com/share/19ea11660f254e0fbfb3ec6bd27c265f
