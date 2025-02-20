@@ -37,17 +37,17 @@
 
 ## ** How Performance is measured **
 - **LightHouse Performance Analysis**
-        - Generated Lighthouse reports for both deployed and local environments.
-        - Evaluated how resources were being utilized and identified opportunities for optimization.
-    **Optimizations Implemented**:
-        - Minified CSS and JavaScript.
-        - Lazy-loaded resources to reduce initial page load time.
-        - Removed unused CSS and JS.
-- **React Profiler**
-        - Identified unnecessary rerenders
+- Generated Lighthouse reports for both deployed and local environments.
+- Evaluated how resources were being utilized and identified opportunities for optimization.
 - **Optimizations Implemented**:
-        - useCallback and useMemo to memoize functions and values.
-        - memo to prevent child components from re-rendering unnecessaril
+- Minified CSS and JavaScript.
+- Lazy-loaded resources to reduce initial page load time.
+- Removed unused CSS and JS.
+- **React Profiler**
+- Identified unnecessary rerenders
+- **Optimizations Implemented**:
+- useCallback and useMemo to memoize functions and values.
+- memo to prevent child components from re-rendering unnecessaril
 - **Lazy loaded the component using React.Suspense**
 
 Deployed at: https://67b75b9fc1f0a60f460cd093--papaya-baklava-596918.netlify.app/
