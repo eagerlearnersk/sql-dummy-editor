@@ -1,18 +1,17 @@
 # ** SQL RUNNER **
-### header H3
  web-based application capable of running SQL queries 
 
 ## **Features**
 
 - **Split View**: Adjustable query and result panels for better UX.
 - **Query Screen**
-        - **Create More button** - lets user have a text input where user can enter query
-        - **Save button** - to commit to the queries
-        - **Run SQL Queries**: Execute SQL commands and display on the results screen
+    - **Create More button** - lets user have a text input where user can enter query
+    - **Save button** - to commit to the queries
+    - **Run SQL Queries**: Execute SQL commands and display on the results screen on right side 
 - **Result Screen**:
     - **Download & Copy**: Easily download or copy results to the clipboard.
     - **Loading State**: Shows "Generating results" when fetching results.
-    - **Lazy Loading**: Optimized loading for large data componen
+    - **Lazy Loading**: Optimized loading for large data component (Tried with react-window but could not finish it , so excluded for now)
 
 ## **Technologies Used**
 - **Frontend**: React with Vite
