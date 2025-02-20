@@ -17,6 +17,7 @@ export default function SqlRunner() {
             <section className="query-section">
                 <QueryContainer />
             </section>
+            {/* not to render results all the time - only when results are updated */}
             <section className="result-section">
                 <Results results={results} />
             </section>
