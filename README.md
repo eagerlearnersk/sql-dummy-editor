@@ -52,8 +52,8 @@
 - **Lazy Loading with React.Suspense**  
   - Lazy-loaded components using `React.Suspense` to improve performance and reduce the initial load time.  
 
-** Live Demo ** 
-https://67b75b9fc1f0a60f460cd093--papaya-baklava-596918.netlify.app/
+- **Live Demo** :
+  - https://67b75b9fc1f0a60f460cd093--papaya-baklava-596918.netlify.app/
 
-** Recorded video **
-https://www.loom.com/share/3aedca659d6f4306b94dc0f3fca2cfc2?sid=a18e3b6e-55cf-4d8f-b808-76209e5c919e
+- **Recorded video**: 
+  - https://www.loom.com/share/3aedca659d6f4306b94dc0f3fca2cfc2?sid=a18e3b6e-55cf-4d8f-b808-76209e5c919e
